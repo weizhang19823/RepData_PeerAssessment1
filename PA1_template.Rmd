@@ -4,16 +4,10 @@ output:
   html_document:
     keep_md: true
 ---
-```{ r packages}
-##load all packages that need in this ananlysis
-library(knitr)
-library(dplry)
-library(ggplot2)
-```
-```{ r setoptions, echo=TRUE}
-ops_chunks$set(echo=TRUE)
-```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Loading and preprocessing the data
 ```{r loaddata}
@@ -84,7 +78,7 @@ Below is the panel plot:
 activity3$type_of_day<-as.factor(activity3$type_of_day)
 # calculate average steps by interval across all days
 activity3_steps_by_interval <- aggregate(steps ~ interval + type_of_day, activity3, mean)
-
+library(ggplot2)
 qplot(interval, 
       steps, 
       data = activity3_steps_by_interval, 
