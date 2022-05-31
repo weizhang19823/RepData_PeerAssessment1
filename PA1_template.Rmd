@@ -70,5 +70,27 @@ median(summary, na.rm=TRUE)
 Mean and median value almost the same after we filled in the missing value with the mean steps for that 5-minute interval. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r weekday or weekend}
 
+activity3["type_of_day"] <- weekdays(as.Date(activity3$date))
+activity3$type_of_day[activity3$type_of_day  %in% c('Saturday','Sunday') ] <- "weekend"
+activity3$type_of_day[activity3$type_of_day != "weekend"] <- "weekday"
+```
 
+Below is the panel plot:
+```{r}
+# convert type_of_day from character to factor
+activity3$type_of_day<-as.factor(activity3$type_of_day)
+# calculate average steps by interval across all days
+activity3_steps_by_interval <- aggregate(steps ~ interval + type_of_day, activity3, mean)
+
+qplot(interval, 
+      steps, 
+      data = activity3_steps_by_interval, 
+      type = 'l', 
+      geom=c("line"),
+      xlab = "Interval", 
+      ylab = "Number of steps", 
+      main = "") +
+  facet_wrap(~ type_of_day, ncol = 1)
+```
