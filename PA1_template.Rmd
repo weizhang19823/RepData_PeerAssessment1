@@ -23,6 +23,7 @@ activity<-read.csv("activity.csv",header=T,sep=",")
 ## What is mean total number of steps taken per day?
 ```{r}
 total.steps<-tapply(activity$steps,activity$date, sum, na.rm=TRUE)
+library(ggplot2)
 qplot(total.steps,binwidth=1000,xlab="Total number of steps taken per day",ylab = "Number of Days")
 mean(total.steps, na.rm=TRUE)
 median(total.steps, na.rm=TRUE)
